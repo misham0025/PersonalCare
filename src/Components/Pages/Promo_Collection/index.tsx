@@ -22,7 +22,7 @@ export default function PromoCollection() {
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
                         <img
-                          src=""
+                          src="https://i.pinimg.com/550x/02/93/a0/0293a06fea5fd23f18b483bea901de36.jpg"
                           alt=""
                           className="h-full w-full object-cover object-center"
                         />
