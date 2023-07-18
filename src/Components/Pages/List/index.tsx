@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const people = [
   {
     name: "Leslie Alexander",
@@ -55,10 +57,11 @@ const people = [
 
 export default function List() {
   return (
-    <div className="mx-auto mt-16 max-w-xl sm:mt-20">
+    <div className="mx-auto  max-w-xl">
       {people.map((person) => (
-        <li key={person.email} className="flex justify-between gap-x-6 py-5">
-          <div className="flex gap-x-4">
+       <button>
+        <li key={person.email} className="flex justify-between gap-x-6 py-3">
+        <div className="flex gap-x-4">
             <img
               className="h-12 w-12 flex-none rounded-full bg-gray-50"
               src={person.imageUrl}
@@ -68,30 +71,26 @@ export default function List() {
               <p className="text-sm font-semibold leading-6 text-gray-900">
                 {person.name}
               </p>
-              <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                {person.email}
-              </p>
+              {person.lastSeen ? (
+                <p className="mt-1 text-xs leading-5 text-gray-500">
+                  Last seen{" "}
+                  <time dateTime={person.lastSeenDateTime}>
+                    {person.lastSeen}
+                  </time>
+                </p>
+              ) : (
+                <div className="mt-1 flex items-center gap-x-1.5">
+                  <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  </div>
+                  <p className="text-xs leading-5 text-gray-500">Online</p>
+                </div>
+              )}
             </div>
           </div>
-          <div className="hidden sm:flex sm:flex-col sm:items-end">
-            <p className="text-sm leading-6 text-gray-900">{person.role}</p>
-            {person.lastSeen ? (
-              <p className="mt-1 text-xs leading-5 text-gray-500">
-                Last seen{" "}
-                <time dateTime={person.lastSeenDateTime}>
-                  {person.lastSeen}
-                </time>
-              </p>
-            ) : (
-              <div className="mt-1 flex items-center gap-x-1.5">
-                <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                </div>
-                <p className="text-xs leading-5 text-gray-500">Online</p>
-              </div>
-            )}
-          </div>
+          {/* <div className="hidden sm:flex sm:flex-col sm:items-end"></div> */}
         </li>
+        </button>
       ))}
     </div>
   );

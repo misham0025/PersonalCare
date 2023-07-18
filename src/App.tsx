@@ -17,6 +17,9 @@ import Collection from "./Components/Pages/Collection";
 import SinglePersonDetails from "./Components/Pages/Single_Person_Details";
 import Testimonial from "./Components/Pages/Testmonial";
 import SupportPage from "./Components/Pages/Support_Page";
+import Message from "./Components/Pages/Message";
+import Notification from "./Components/Pages/Notification";
+import List from "./Components/Pages/List";
 
 function App() {
   return (
@@ -28,6 +31,10 @@ function App() {
         <Route path="/home/customer" element={<FilterPage />} />
         <Route path="/home/collection" element={<Testimonial />} />
         <Route path="/home/support_page" element={<SupportPage />} />
+        <Route path="/home/message" element={<Message />} />
+        <Route path="/home/notification" element={<Notification />} />
+
+
       </Route>
     </Routes>
   );

@@ -21,8 +21,8 @@ const navigation = [
   { name: "Home", href: "/home/support_page", current: false },
   { name: "Customer", href: "/home/customer" },
   { name: "Collection", href: "/home/collection" },
-  { name: "Partner", href: "#" },
-  { name: "About", href: "#" },
+  { name: "Chat", href: "/home/message" },
+  { name: "Awareness", href: "#" },
 ];
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <>
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-gray-900">
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -47,8 +47,8 @@ export default function Home() {
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <img
-                        className="h-8 w-8"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        className="h-15 w-20"
+                        src=""
                         alt="Your Company"
                       />
                     </div>
@@ -77,13 +77,13 @@ export default function Home() {
                       {token ? (
                         <>
                           {" "}
-                          <button
-                            type="button"
+                          <Link
+                            to="/home/notification"
                             className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                           >
                             <span className="sr-only">View notifications</span>
                             <BellIcon className="h-6 w-6" aria-hidden="true" />
-                          </button>
+                          </Link>
                           <Menu as="div" className="relative ml-3">
                             <div>
                               <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -190,13 +190,13 @@ export default function Home() {
                           {user.email}
                         </div>
                       </div>
-                      <button
-                        type="button"
+                      <Link
+                        to="/home/notification"
                         className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       >
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
-                      </button>
+                      </Link>
                     </div>
                     <div className="mt-3 space-y-1 px-2">
                       {userNavigation.map((item) => (
