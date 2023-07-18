@@ -9,11 +9,17 @@ export default function Login() {
   const [value, setvalue] = useState<any>({ email: "", password: "" });
 
   const handlesubmit = () => {
-    navigate("/home");
+    // if (value.email === auth.email && value.password === auth.password) {
+    //   // navigate("/home");
+    //   console.log(value);
+    // } else {
+    console.log(auth.email, auth.password);
+    //   alert("Invalid crediential");
+    // }
   };
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col  justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
@@ -57,12 +63,12 @@ export default function Login() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <Link
-                    to="/forget_pass"
+                  <a
+                    href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
-                  </Link>
+                  </a>
                 </div>
               </div>
               <div className="mt-2">

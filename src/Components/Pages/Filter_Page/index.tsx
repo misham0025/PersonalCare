@@ -8,6 +8,7 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+import QuickReview from "../Quick_Review";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -58,6 +59,69 @@ const filters = [
       { value: "20l", label: "20L", checked: false },
       { value: "40l", label: "40L", checked: true },
     ],
+  },
+];
+
+const products = [
+  {
+    id: 1,
+    name: "Jasmine",
+    href: "#",
+    imageSrc:
+      "https://img.freepik.com/premium-photo/abstract-rainbow-colorful-bright-feather-closeup-up-macro-view-background-plumage-texture-with-dew-drops_753134-644.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    age: "28",
+    color: "Black",
+  },
+  {
+    id: 1,
+    name: "Poornima",
+    href: "#",
+    imageSrc:
+      "https://img.freepik.com/premium-photo/abstract-rainbow-colorful-bright-feather-closeup-up-macro-view-background-plumage-texture-with-dew-drops_753134-644.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    age: "25",
+    color: "White",
+  },
+  {
+    id: 1,
+    name: "Poornima",
+    href: "#",
+    imageSrc:
+      "https://img.freepik.com/premium-photo/abstract-rainbow-colorful-bright-feather-closeup-up-macro-view-background-plumage-texture-with-dew-drops_753134-644.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    age: "25",
+    color: "White",
+  },
+  {
+    id: 1,
+    name: "Poornima",
+    href: "#",
+    imageSrc:
+      "https://img.freepik.com/premium-photo/abstract-rainbow-colorful-bright-feather-closeup-up-macro-view-background-plumage-texture-with-dew-drops_753134-644.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    age: "25",
+    color: "White",
+  },
+  {
+    id: 1,
+    name: "Poornima",
+    href: "#",
+    imageSrc:
+      "https://img.freepik.com/premium-photo/abstract-rainbow-colorful-bright-feather-closeup-up-macro-view-background-plumage-texture-with-dew-drops_753134-644.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    age: "25",
+    color: "White",
+  },
+  {
+    id: 1,
+    name: "Stella",
+    href: "#",
+    imageSrc:
+      "https://img.freepik.com/premium-photo/abstract-rainbow-colorful-bright-feather-closeup-up-macro-view-background-plumage-texture-with-dew-drops_753134-644.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    age: "33",
+    color: "Brown",
   },
 ];
 
@@ -116,9 +180,9 @@ export default function FilterPage() {
                   </div>
 
                   {/* Filters */}
-                  <form className="mt-4 border-t border-gray-200">
+                  <form className="mt-4 border-t border-gray-100">
                     <h3 className="sr-only">Categories</h3>
-                    <ul
+                    {/* <ul
                       role="list"
                       className="px-2 py-3 font-medium text-gray-900"
                     >
@@ -129,7 +193,7 @@ export default function FilterPage() {
                           </a>
                         </li>
                       ))}
-                    </ul>
+                    </ul> */}
 
                     {filters.map((section) => (
                       <Disclosure
@@ -247,13 +311,13 @@ export default function FilterPage() {
                 </Transition>
               </Menu>
 
-              <button
+              {/* <button
                 type="button"
                 className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
               >
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
+              </button> */}
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
@@ -270,7 +334,7 @@ export default function FilterPage() {
               Products
             </h2>
 
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-6 ">
               {/* Filters */}
               <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
@@ -344,12 +408,50 @@ export default function FilterPage() {
                 ))}
               </form>
 
-              {/* Product grid */}
-              <div className="lg:col-span-3">{/* Your content */}</div>
+              <div className="lg:col-span-5">
+                {" "}
+                <div className="bg-white">
+                  <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
+                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                      {products.map((product) => (
+                        <div key={product.id} className="group relative ">
+                          <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                            <img
+                              src={product.imageSrc}
+                              alt={product.imageAlt}
+                              className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                            />
+                          </div>
+                          <div className="mt-4 flex justify-between">
+                            <div>
+                              <h3 className="text-sm text-gray-700">
+                                <a href={product.href}>
+                                  <span
+                                    aria-hidden="true"
+                                    className="absolute inset-0"
+                                  />
+                                  {product.name}
+                                </a>
+                              </h3>
+                              <p className="mt-1 text-sm text-gray-500">
+                                {product.color}
+                              </p>
+                            </div>
+                            <p className="text-sm font-medium text-gray-900">
+                              {product.age} yrs
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
         </main>
       </div>
+      <QuickReview />
     </div>
   );
 }
