@@ -9,14 +9,8 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import List from "../List";
+import { log } from "console";
 
-const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-];
 const subCategories = [
   { name: "Totes", href: "#" },
   { name: "Backpacks", href: "#" },
@@ -68,6 +62,88 @@ function classNames(...classes: any) {
 
 export default function Message() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [selectedChat, setSelectedChat] = useState<any>(null);
+  const [chats, setChats] = useState<any>([
+    {
+      name: "Leslie Alexander",
+      email: "leslie.alexander@example.com",
+      role: "Co-Founder / CEO",
+      imageUrl:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      lastSeen: "3h ago",
+      lastSeenDateTime: "2023-01-23T13:23Z",
+    },
+    {
+      name: "Leslie Alexander",
+      email: "leslie.alexander@example.com",
+      role: "Co-Founder / CEO",
+      imageUrl:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      lastSeen: "3h ago",
+      lastSeenDateTime: "2023-01-23T13:23Z",
+    },
+
+    {
+      name: "Leslie Alexander",
+      email: "leslie.alexander@example.com",
+      role: "Co-Founder / CEO",
+      imageUrl:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      lastSeen: "3h ago",
+      lastSeenDateTime: "2023-01-23T13:23Z",
+    },
+    {
+      name: "Michael Foster",
+      email: "michael.foster@example.com",
+      role: "Co-Founder / CTO",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      lastSeen: "3h ago",
+      lastSeenDateTime: "2023-01-23T13:23Z",
+    },
+    {
+      name: "Dries Vincent",
+      email: "dries.vincent@example.com",
+      role: "Business Relations",
+      imageUrl:
+        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      lastSeen: null,
+    },
+    {
+      name: "Lindsay Walton",
+      email: "lindsay.walton@example.com",
+      role: "Front-end Developer",
+      imageUrl:
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      lastSeen: "3h ago",
+      lastSeenDateTime: "2023-01-23T13:23Z",
+    },
+    {
+      name: "Courtney Henry",
+      email: "courtney.henry@example.com",
+      role: "Designer",
+      imageUrl:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      lastSeen: "3h ago",
+      lastSeenDateTime: "2023-01-23T13:23Z",
+    },
+    {
+      name: "Tom Cook",
+      email: "tom.cook@example.com",
+      role: "Director of Product",
+      imageUrl:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      lastSeen: null,
+    },
+  ]);
+
+  const miz = chats.find((person: any) => person.email === selectedChat).lastSeen;
+
+  console.log(miz);
+
+  const handleChatClick = (chatId: any) => {
+    setSelectedChat(chatId);
+  };
 
   return (
     <div className="bg-white">
@@ -270,80 +346,146 @@ export default function Message() {
           </div>
 
           <section aria-labelledby="products-heading" className="pb-24 pt-6">
-            <h2 id="products-heading" className="sr-only">
-              Products
-            </h2>
-
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
-              {/* Filters */}
-              {/* <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
-                </ul>
-
-                {filters.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
-                    {({ open }) => (
-                      <>
-                        <h3 className="-my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
-                            <span className="ml-6 flex items-center">
-                              {open ? (
-                                <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                              ) : (
-                                <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                              )}
-                            </span>
-                          </Disclosure.Button>
-                        </h3>
-                        <Disclosure.Panel className="pt-6">
-                          <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
-                              <div key={option.value} className="flex items-center">
-                                <input
-                                  id={`filter-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
-                                  defaultValue={option.value}
-                                  type="checkbox"
-                                  defaultChecked={option.checked}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <label
-                                  htmlFor={`filter-${section.id}-${optionIdx}`}
-                                  className="ml-3 text-sm text-gray-600"
-                                >
-                                  {option.label}
-                                </label>
+            <div
+              style={{ height: "80vh" }}
+              className="grid grid-cols-1 gap-x-0   gap-y-10 lg:grid-cols-5"
+            >
+              <div className="hidden lg:block overflow-hidden hover:overflow-y-auto h-full border w-full">
+                <div className="mx-auto   h-full">
+                  {chats.map((person: any) => (
+                    <button
+                      onClick={() => handleChatClick(person.email)}
+                      className=" hover:bg-blue-600/25 w-full"
+                    >
+                      <div
+                        key={person.email}
+                        className="flex justify-between gap-x-6 py-3"
+                      >
+                        <div className="flex gap-x-4 pl-3">
+                          <img
+                            className="h-12 w-12 flex-none rounded-full bg-gray-50"
+                            src={person.imageUrl}
+                            alt=""
+                          />
+                          <div className="min-w-0 flex-auto">
+                            <p className="text-sm font-semibold leading-6 text-gray-900">
+                              {person.name}
+                            </p>
+                            {person.lastSeen ? (
+                              <p className="mt-1 text-xs leading-5 text-gray-500">
+                                Last seen{" "}
+                                <time dateTime={person.lastSeenDateTime}>
+                                  {person.lastSeen}
+                                </time>
+                              </p>
+                            ) : (
+                              <div className="mt-1 flex items-center gap-x-1.5">
+                                <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                </div>
+                                <p className="text-xs leading-5 text-gray-500">
+                                  Online
+                                </p>
                               </div>
-                            ))}
+                            )}
                           </div>
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
-                ))}
-              </form> */}
-              <div className="hidden lg:block">
-                <List />
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div
-                style={{ borderRadius: "10px", height: "100%", width: "100%" }}
-                className="lg:col-span-4 bg-gray-100"
-              ><div style={{height: "100%", width: "100%"}}>
+              <div className="lg:col-span-4 bg-cyan-950 border">
+                {selectedChat && (
+                  <>
+                    <div className="mx-auto h-full">
+                      <div className="max-w-full mx-auto bg-white h-16 drop-shadow-md  overflow-hidden md:max-w-full">
+                        <div className="md:flex">
+                          <div className="md:shrink-0">
+                            <div className="flex justify-between gap-x-6 py-3">
+                              <div className="flex gap-x-4 pl-3">
+                                <img
+                                  className="h-12 w-12 flex-none rounded-full bg-gray-50"
+                                  src={
+                                    chats.find(
+                                      (person: any) =>
+                                        person.email === selectedChat
+                                    ).imageUrl
+                                  }
+                                  alt=""
+                                />
+                                <div className="min-w-0 flex-auto">
+                                  <p className="text-sm font-semibold leading-6 text-gray-900">
+                                    {
+                                      chats.find(
+                                        (person: any) =>
+                                          person.email === selectedChat
+                                      ).name
+                                    }
+                                  </p>
+                                  {/* /////////// */}
+                                  {/* <div className="mt-1 flex items-center gap-x-1.5">
+                                    <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                    </div>
+                                    <p className="text-xs leading-5 text-gray-500">
+                                      Online
+                                    </p>
+                                  </div> */}
 
-              </div>
-               <div style={{height: "100%", width: "100%", display:"flex",flexWrap:"nowrap",justifyContent:"center"}} >
-               <textarea placeholder="write message..." style={{width:"100%",height:"30px"}}  /><button style={{height:"30px",background:"blue", padding:"10px", textAlign:"center"}}>send</button>
-               </div>
-                   
-               
+                                  {/* //////////////// */}
+
+                                  {chats.find(
+                                    (person: any) =>
+                                      person.email === selectedChat
+                                  ).lastSeen ? (
+                                    <p className="mt-1 text-xs leading-5 text-gray-500">
+                                      Last seen
+                                      <time dateTime={chats.lastSeenDateTime}>
+                                        {chats.lastSeen}
+                                      </time>
+                                    </p>
+                                  ) : (
+                                    <div className="mt-1 flex items-center gap-x-1.5">
+                                      <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                      </div>
+                                      <p className="text-xs leading-5 text-gray-500">
+                                        Online
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="w-full" style={{ height: "70vh" }}>
+                        {/* ///////////////////////////// */}
+                      </div>
+
+                      <div className="w-full  ">
+                        <div className="flex items-center border-b  border-teal-500 py-2">
+                          <input
+                            className="appearance-none bg-transparent text-white border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                            type="text"
+                            placeholder="Write message..."
+                            aria-label="Full name"
+                          />
+                          <button
+                            className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 mr-2 hover:border-teal-700 text-sm border-4  text-white py-1 px-2 rounded"
+                            type="button"
+                          >
+                            Send
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </section>
