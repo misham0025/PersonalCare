@@ -10,6 +10,8 @@ import List from "../List";
 import CustomerForm from "../Customer_Form";
 import PromoCollection from "../Promo_Collection";
 import { Link, Outlet } from "react-router-dom";
+import { removeLocalStorageItem } from "../../Services/localStorage";
+
 
 const user = {
   name: "Tom Cook",
@@ -25,9 +27,9 @@ const navigation = [
   { name: "Awareness", href: "#" },
 ];
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "/" },
+  { name: "Your Profile", to: "#",onClick:"" },
+  { name: "Settings", to: "#" ,onClick:""},
+  { name: "Sign out", to: "/", onClick: removeLocalStorageItem("AUTH_TOKEN") },
 ];
 
 function classNames(...classes: any) {
@@ -108,15 +110,15 @@ export default function Home() {
                                 {userNavigation.map((item) => (
                                   <Menu.Item key={item.name}>
                                     {({ active }) => (
-                                      <a
-                                        href={item.href}
+                                      <Link
+                                        to={item.to}
                                         className={classNames(
                                           active ? "bg-gray-100" : "",
                                           "block px-4 py-2 text-sm text-gray-700"
                                         )}
                                       >
                                         {item.name}
-                                      </a>
+                                      </Link>
                                     )}
                                   </Menu.Item>
                                 ))}
@@ -201,13 +203,13 @@ export default function Home() {
                     <div className="mt-3 space-y-1 px-2">
                       {userNavigation.map((item) => (
                         <Disclosure.Button
-                          key={item.name}
-                          as="a"
-                          href={item.href}
-                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                        >
-                          {item.name}
-                        </Disclosure.Button>
+                        key={item.name}
+                        as="a"
+                        href={item.to}
+                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                      >
+                        {item.name}
+                      </Disclosure.Button>
                       ))}
                     </div>
                   </div>

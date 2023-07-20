@@ -1,22 +1,41 @@
-import { log } from "console";
+import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Login_api from "../../Api/Login/login.service";
+import { setLocalStorageItem } from "../../Services/localStorage";
 
 export default function Login() {
   const navigate = useNavigate();
-  const auth = { email: "misham@gmail.com", password: "12345" };
 
-  const [value, setvalue] = useState<any>({ email: "", password: "" });
-
-  const handlesubmit = () => {
-    // if (value.email === auth.email && value.password === auth.password) {
-    //   // navigate("/home");
-    //   console.log(value);
-    // } else {
-    console.log(auth.email, auth.password);
-    //   alert("Invalid crediential");
-    // }
+  const onPost = async (value: any) => {
+    await Login_api.handleLogin(value)
+      .then((res: any) => {
+        setLocalStorageItem("AUTH_TOKEN", res.token);
+        navigate("/home");
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   };
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      username: Yup.string()
+        .email("Invalid email address")
+        .required("Email Required"),
+      password: Yup.string().required("Password Required"),
+    }),
+    onSubmit: (values) => {
+      onPost(values);
+    },
+  });
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col  justify-center px-6 py-12 lg:px-8">
@@ -32,7 +51,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6">
+          <form onSubmit={formik.handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -42,19 +61,21 @@ export default function Login() {
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  onChange={(e: any) => {
-                    const { value1 } = e.target;
-                    setvalue({ ...value, email: value1 });
-                  }}
+                  id="username"
+                  name="username"
+                  type="text"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  autoComplete="off"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {formik.touched.username && formik.errors.username ? (
+                  <div>{formik.errors.username}</div>
+                ) : null}
               </div>
             </div>
 
-            <div>
+            <div className="mt-4">
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
@@ -76,18 +97,18 @@ export default function Login() {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
-                  required
-                  onChange={(e: any) => {
-                    const { value1 } = e.target;
-                    setvalue({ ...value, password: value1 });
-                  }}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  autoComplete="off"
+                  className="block w-full  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {formik.touched.password && formik.errors.password ? (
+                  <div>{formik.errors.password}</div>
+                ) : null}
               </div>
             </div>
 
-            <div>
+            <div className="mt-10">
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-sky-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -109,15 +130,7 @@ export default function Login() {
         </div>
       </div>
 
-      <div>
-        {/* <SinglePersonDetails />
-        <CustomerList />
-        <Collection />
-        <FilterPage />
-        <QuickReview />
-        <Spec /> */}
-        {/* <PromoCollection /> */}
-      </div>
+      <div></div>
     </>
   );
 }

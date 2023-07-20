@@ -1,5 +1,6 @@
 import "./App.css";
 import {
+  Navigate,
   createBrowserRouter,
   RouterProvider,
   Route,
@@ -20,22 +21,26 @@ import SupportPage from "./Components/Pages/Support_Page";
 import Message from "./Components/Pages/Message";
 import Notification from "./Components/Pages/Notification";
 import List from "./Components/Pages/List";
+import { getLocalStorageItem } from "../src/Components/Services/localStorage";
 
 function App() {
+  const token = getLocalStorageItem("AUTH_TOKEN");
+
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="*" element={<Page404 />} />
+      {/* <Route path="*" element={<Page404 />} /> */}
       <Route path="/register" element={<Register />} />
-      <Route path="/home" element={<Home />}>
-        <Route path="/home/customer" element={<FilterPage />} />
-        <Route path="/home/collection" element={<Testimonial />} />
-        <Route path="/home/support_page" element={<SupportPage />} />
-        <Route path="/home/message" element={<Message />} />
-        <Route path="/home/notification" element={<Notification />} />
-
-
-      </Route>
+      {!token ? <Route path="*" element={<Navigate to="/" replace />} /> : null}
+      {token ? (
+        <Route path="/home" element={<Home />}>
+          <Route path="/home/customer" element={<FilterPage />} />
+          <Route path="/home/collection" element={<Testimonial />} />
+          <Route path="/home/support_page" element={<SupportPage />} />
+          <Route path="/home/message" element={<Message />} />
+          <Route path="/home/notification" element={<Notification />} />
+        </Route>
+      ) : null}
     </Routes>
   );
 }
