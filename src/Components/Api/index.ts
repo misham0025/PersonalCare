@@ -7,9 +7,7 @@ const apiInstance = axios.create({
   baseURL: API_BASE_URL,
 });
 apiInstance.interceptors.request.use(requestInterceptor);
-apiInstance.interceptors.response.use(
-  (response) => responseInterceptor(response),
-  (error) => {
+apiInstance.interceptors.response.use((response) => responseInterceptor(response),(error) => {
     const accessToken = localStorage.getItem("AUTH_TOKEN");
     if (error.response.status === 401 && accessToken) {
       removeLocalStorageItem("AUTH_TOKEN");

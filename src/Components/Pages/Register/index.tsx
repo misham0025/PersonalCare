@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Switch } from "@headlessui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import Login_api from "../../Api/Login/login.service";
 import {
   CloudArrowUpIcon,
   LockClosedIcon,
@@ -13,6 +16,40 @@ function classNames(...classes: any) {
 }
 
 export default function Register() {
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+  const formik = useFormik({
+    initialValues: formData,
+    // validationSchema: Yup.object({
+    //   username: Yup.string()
+    //     .email("Invalid email address")
+    //     .required("Email Required"),
+    //   password: Yup.string().required("Password Required"),
+    // }),
+    onSubmit: () => {
+      onPost(formData);
+    },
+  });
+
+  const onPost = async (value: any) => {
+    await Login_api.handleRegister(value)
+      .then((res: any) => {
+        console.log(res);
+
+        navigate("/");
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
   const features = [
     {
       name: "Push to deploy.",
@@ -33,6 +70,7 @@ export default function Register() {
       icon: ServerIcon,
     },
   ];
+
   const [agreed, setAgreed] = useState(false);
 
   return (
@@ -86,7 +124,7 @@ export default function Register() {
                 Sign Up
               </h2>
             </div>
-            <form className="mx-auto mt-16 max-w-xl sm:mt-5">
+            <form onSubmit={formik.handleSubmit}>
               <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div className="sm:col-span-2">
                   <label
@@ -97,10 +135,15 @@ export default function Register() {
                   </label>
                   <div className="mt-2.5">
                     <input
+                      id="firstname"
+                      name="firstname"
                       type="text"
-                      name="first-name"
-                      id="first-name"
-                      autoComplete="given-name"
+                      onChange={(e: any) => {
+                        const { value } = e.target;
+                        setFormData({ ...formData, firstname: value });
+                      }}
+                      onBlur={formik.handleBlur}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -114,10 +157,15 @@ export default function Register() {
                   </label>
                   <div className="mt-2.5">
                     <input
+                      id="lastname"
+                      name="lastname"
                       type="text"
-                      name="last-name"
-                      id="last-name"
-                      autoComplete="family-name"
+                      onChange={(e: any) => {
+                        const { value } = e.target;
+                        setFormData({ ...formData, lastname: value });
+                      }}
+                      onBlur={formik.handleBlur}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -131,10 +179,15 @@ export default function Register() {
                   </label>
                   <div className="mt-2.5">
                     <input
+                      id="username"
+                      name="username"
                       type="text"
-                      name="company"
-                      id="company"
-                      autoComplete="organization"
+                      onChange={(e: any) => {
+                        const { value } = e.target;
+                        setFormData({ ...formData, username: value });
+                      }}
+                      onBlur={formik.handleBlur}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -148,10 +201,15 @@ export default function Register() {
                   </label>
                   <div className="mt-2.5">
                     <input
-                      type="email"
-                      name="email"
                       id="email"
-                      autoComplete="email"
+                      name="email"
+                      type="text"
+                      onChange={(e: any) => {
+                        const { value } = e.target;
+                        setFormData({ ...formData, email: value });
+                      }}
+                      onBlur={formik.handleBlur}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -165,10 +223,15 @@ export default function Register() {
                   </label>
                   <div className="relative mt-2.5">
                     <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      autoComplete="email"
+                      id="phone"
+                      name="phone"
+                      type="text"
+                      onChange={(e: any) => {
+                        const { value } = e.target;
+                        setFormData({ ...formData, phone: value });
+                      }}
+                      onBlur={formik.handleBlur}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -182,10 +245,15 @@ export default function Register() {
                   </label>
                   <div className="mt-2.5">
                     <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      autoComplete="email"
+                      id="password"
+                      name="password"
+                      type="text"
+                      onChange={(e: any) => {
+                        const { value } = e.target;
+                        setFormData({ ...formData, password: value });
+                      }}
+                      onBlur={formik.handleBlur}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -199,10 +267,14 @@ export default function Register() {
                   </label>
                   <div className="mt-2.5">
                     <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      autoComplete="email"
+                      id="confirm"
+                      name="
+                     confirm"
+                      type="text"
+                      onChange={(e: any) => {
+                        const { value } = e.target;
+                      }}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>

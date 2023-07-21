@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import PriceCard from "../Price_Card";
@@ -9,9 +9,8 @@ import CustomerInfo from "../About_Customer";
 import List from "../List";
 import CustomerForm from "../Customer_Form";
 import PromoCollection from "../Promo_Collection";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { removeLocalStorageItem } from "../../Services/localStorage";
-
 
 const user = {
   name: "Tom Cook",
@@ -27,9 +26,9 @@ const navigation = [
   { name: "Awareness", href: "#" },
 ];
 const userNavigation = [
-  { name: "Your Profile", to: "#",onClick:"" },
-  { name: "Settings", to: "#" ,onClick:""},
-  { name: "Sign out", to: "/", onClick: removeLocalStorageItem("AUTH_TOKEN") },
+  { name: "Your Profile", to: "#" },
+  { name: "Settings", to: "#" },
+  { name: "Sign out", to: "/" },
 ];
 
 function classNames(...classes: any) {
@@ -37,7 +36,14 @@ function classNames(...classes: any) {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
   const [token, setToken] = useState<any>(true);
+
+  const remove = () => {
+    removeLocalStorageItem("AUTH_TOKEN");
+    navigate("/");
+  };
+
   return (
     <>
       <div className="min-h-full">
@@ -48,11 +54,7 @@ export default function Home() {
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <img
-                        className="h-15 w-20"
-                        src=""
-                        alt="Your Company"
-                      />
+                      <img className="h-15 w-20" src="" alt="Your Company" />
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
@@ -107,21 +109,25 @@ export default function Home() {
                               leaveTo="transform opacity-0 scale-95"
                             >
                               <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                {userNavigation.map((item) => (
-                                  <Menu.Item key={item.name}>
-                                    {({ active }) => (
-                                      <Link
-                                        to={item.to}
-                                        className={classNames(
-                                          active ? "bg-gray-100" : "",
-                                          "block px-4 py-2 text-sm text-gray-700"
-                                        )}
-                                      >
-                                        {item.name}
-                                      </Link>
-                                    )}
-                                  </Menu.Item>
-                                ))}
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <button
+                                      onClick={() => {
+                                        remove();
+                                      }}
+                                      style={{
+                                        width: "100%",
+                                        textAlign: "start",
+                                      }}
+                                      className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm text-gray-700"
+                                      )}
+                                    >
+                                      Logout
+                                    </button>
+                                  )}
+                                </Menu.Item>
                               </Menu.Items>
                             </Transition>
                           </Menu>
@@ -201,16 +207,15 @@ export default function Home() {
                       </Link>
                     </div>
                     <div className="mt-3 space-y-1 px-2">
-                      {userNavigation.map((item) => (
-                        <Disclosure.Button
-                        key={item.name}
-                        as="a"
-                        href={item.to}
-                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                      >
-                        {item.name}
+                      <Disclosure.Button className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+                        <button
+                          onClick={() => {
+                            remove();
+                          }}
+                        >
+                          Logout
+                        </button>
                       </Disclosure.Button>
-                      ))}
                     </div>
                   </div>
                 ) : (

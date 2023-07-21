@@ -5,18 +5,25 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Login_api from "../../Api/Login/login.service";
 import { setLocalStorageItem } from "../../Services/localStorage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const navigate = useNavigate();
+
+  const notifyS = (e: any) => toast(e);
+
+  const notifyE = (e: any) => toast.error(e);
 
   const onPost = async (value: any) => {
     await Login_api.handleLogin(value)
       .then((res: any) => {
         setLocalStorageItem("AUTH_TOKEN", res.token);
-        navigate("/home");
+        notifyS(res.message);
+        navigate("/home/support_page");
       })
       .catch((err: any) => {
-        console.log(err);
+        notifyE(err.response.data.message);
       });
   };
 
@@ -25,12 +32,12 @@ export default function Login() {
       username: "",
       password: "",
     },
-    validationSchema: Yup.object({
-      username: Yup.string()
-        .email("Invalid email address")
-        .required("Email Required"),
-      password: Yup.string().required("Password Required"),
-    }),
+    // validationSchema: Yup.object({
+    //   username: Yup.string()
+    //     .email("Invalid email address")
+    //     .required("Email Required"),
+    //   password: Yup.string().required("Password Required"),
+    // }),
     onSubmit: (values) => {
       onPost(values);
     },
@@ -38,6 +45,20 @@ export default function Login() {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
       <div className="flex min-h-full flex-1 flex-col  justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img

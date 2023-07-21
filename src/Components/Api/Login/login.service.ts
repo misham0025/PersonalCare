@@ -6,6 +6,9 @@ class Login_api {
   handleLogin = async (payload: any) => {
     return await apiInstance.post<any>(`/login`, payload);
   };
+  handleRegister = async (payload: any) => {
+    return await apiInstance.post<any>(`/register`, payload);
+  };
 }
 
 export default new Login_api();
