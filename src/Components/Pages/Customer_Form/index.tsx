@@ -107,6 +107,7 @@ export default function CustomerForm() {
                     className="mx-auto h-12 w-12 text-gray-300"
                     aria-hidden="true"
                   />
+                  <form></form>
                   <div className="mt-4 flex text-sm leading-6 text-gray-600">
                     <label
                       htmlFor="file-upload"
